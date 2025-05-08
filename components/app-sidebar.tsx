@@ -7,7 +7,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -54,7 +53,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="w-full h-[80px] flex gap-2 items-center justify-center">
+        <div className="w-full h-[80px] flex gap-2 items-center ">
           <Image
             src={"/logo.svg"}
             alt="logo"
@@ -68,17 +67,19 @@ export function AppSidebar() {
               isCollapsed ? "hidden" : "opacity-100 translate-x-0"
             } font-semibold text-2xl transition-all duration-200 ease-in-out`}
           >
-            Ari-Chat
+            Mari
           </span>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className="font-semibold text-3xl"
+                >
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
