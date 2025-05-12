@@ -1,5 +1,5 @@
 "use client";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, LibraryBig, LogIn, Search } from "lucide-react";
 
 import {
   Sidebar,
@@ -14,7 +14,16 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { useSidebar } from "@/components/ui/sidebar";
-import NavUser from "./homepage/nav_user";
+// import NavUser from "./homepage/nav_user";
+import {
+  SignedIn,
+  SignedOut,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 // Menu items.
 const items = [
@@ -24,29 +33,20 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
+    title: "Discover",
     url: "#",
     icon: Search,
   },
   {
-    title: "Settings",
+    title: "Library",
     url: "#",
-    icon: Settings,
+    icon: LibraryBig,
   },
 ];
 
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { user } = useUser();
 
   const isCollapsed = state === "collapsed";
 
@@ -76,11 +76,11 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className="font-semibold text-3xl"
-                >
-                  <SidebarMenuButton asChild>
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className="font-semibold text-[1.2rem]"
+                  >
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -93,13 +93,29 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="flex flex-row items-center gap-2 w-full ">
-        <NavUser
-          user={{
-            name: "nuel",
-            email: "example@gmail.com",
-            avatar: "",
-          }}
-        />
+        {/* clerk button */}
+        {isCollapsed && !user ? (
+          <Link href={"/sign-in"}>
+            <LogIn />
+          </Link>
+        ) : (
+          <SignedOut>
+            <SignUpButton mode="modal">
+              <Button className="w-full font-semibold text-lg">Sign Up</Button>
+            </SignUpButton>
+          </SignedOut>
+        )}
+
+        <SignedIn>
+          {/* <NavUser
+            user={{
+              name: "nuel",
+              email: "example@gmail.com",
+              avatar: "",
+            }}
+          /> */}
+          <UserButton />
+        </SignedIn>
       </SidebarFooter>
     </Sidebar>
   );

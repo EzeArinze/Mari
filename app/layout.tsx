@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Header from "@/components/homepage/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import Provider from "./Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,12 +35,12 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full min-h-dvh">
+            <Provider>
               <SidebarInset>
                 <Header />
               </SidebarInset>
               {children}
-            </main>
+            </Provider>
           </SidebarProvider>
         </body>
       </html>
