@@ -1,5 +1,8 @@
 // import { useParams } from "next/navigation";
+import DisplayResult from "@/components/search/display_result";
+import Header from "@/components/search/header";
 import { supabase } from "@/services/supabase_client";
+
 import React from "react";
 
 interface SQRProps {
@@ -15,9 +18,15 @@ async function SearchQueryResult({ params }: SQRProps) {
     .from("Library")
     .select("*")
     .eq("libId", libId);
-  console.log(LIbrary?.at(0));
 
-  return <div>page</div>;
+  return (
+    <div>
+      <Header SearchRecord={LIbrary?.at(0)} />
+      <div className="px-5 md:px-20 lg:px-36 xl:px-56 mt-20">
+        <DisplayResult SearchRecord={LIbrary?.at(0)} />
+      </div>
+    </div>
+  );
 }
 
 export default SearchQueryResult;

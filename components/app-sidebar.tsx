@@ -24,7 +24,6 @@ import {
 } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Link from "next/link";
-
 // Menu items.
 const items = [
   {
@@ -71,6 +70,7 @@ export function AppSidebar() {
           </span>
         </div>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>

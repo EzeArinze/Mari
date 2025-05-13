@@ -35,12 +35,12 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <Provider>
+            <header>
               <SidebarInset>
                 <Header />
               </SidebarInset>
-              {children}
-            </Provider>
+            </header>
+            <Provider>{children}</Provider>
           </SidebarProvider>
         </body>
       </html>
