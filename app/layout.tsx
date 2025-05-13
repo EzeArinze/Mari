@@ -5,7 +5,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Header from "@/components/homepage/header";
 import { ClerkProvider } from "@clerk/nextjs";
-import Provider from "./Provider";
+import Provider from "@/hooks/Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

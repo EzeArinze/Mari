@@ -3,16 +3,17 @@
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Atom, SearchCheck } from "lucide-react";
-// import { Button } from "../ui/button";
 import ChatBoxAction from "./chat_box_action";
 import { supabase } from "@/services/supabase_client";
 import { useUser } from "@clerk/nextjs";
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 // const ICON_STYLE = "text-gray-500 h-5 w-5 hover:cursor-pointer";
 
 function TabSection() {
   const { user } = useUser();
+  const router = useRouter();
 
   const [searchInput, setSearchInput] = useState({
     ask: "",
@@ -31,12 +32,12 @@ function TabSection() {
   };
 
   const onSearchQuery = async () => {
-    if (searchInput.ask === "" && searchInput.think === "") return;
+    if (input.trim() === "") return;
 
-    setIsLoading((prev) => !prev);
+    setIsLoading(true);
     try {
       const newId = uuidv4();
-      const { data, error } = await supabase
+      const { data, error, status } = await supabase
         .from("Library")
         .insert([
           {
@@ -55,12 +56,17 @@ function TabSection() {
         ...prev,
         [activeTab === "Search" ? "ask" : "think"]: "",
       }));
-      setIsLoading(false);
+
+      if (status >= 200 && status < 300) {
+        router.push(`/search/${newId}`);
+      }
       console.log(data);
 
       return data;
     } catch (error) {
       console.error("Error inserting search query:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
